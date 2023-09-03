@@ -2,6 +2,24 @@
 import { ref } from 'vue'
 
 const showModal = ref(false);
+const newNote = ref("");
+const noteList = ref([]);
+
+function renderColor() {
+  return "hsl(" + Math.random() * 360 + ", 100%, 75%";
+}
+
+const addNote = () => {
+  noteList.value.push({
+    id: Math.random() * 1000000,
+    text: newNote.value,
+    date: new Date(),
+    backgroundColor: renderColor()
+  });
+  console.log(noteList);
+  showModal.value = false;
+  newNote.value = "";
+}
 
 
 </script>
@@ -10,8 +28,8 @@ const showModal = ref(false);
   <main>
     <div v-if="showModal" class="overlay flex items-center">
       <div class="bg-white rounded-md p-10 flex flex-col w-1/3">
-        <textarea class="border mb-3" name="note" id="note" cols="30" rows="10"></textarea>
-        <button class="bg-blue-400 hover:bg-blue-500 text-white mb-3 cursor-pointer">Add note</button>
+        <textarea v-model="newNote" class="border mb-3" name="note" id="note" cols="30" rows="10"></textarea>
+        <button @click="addNote" class="bg-blue-400 hover:bg-blue-500 text-white mb-3 cursor-pointer">Add note</button>
         <button @click="showModal = false" class="bg-red-200 hover:bg-red-400 text-white cursor-pointer">Close</button>
       </div>
     </div>
@@ -22,15 +40,11 @@ const showModal = ref(false);
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">+</button>
       </header>
       <div class="cards-container flex flex-wrap">
-        <div class="card">
-          <p class="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus aut cumque quisquam, eaque
-            eligendi omnis.</p>
-          <p class="date">30/08/2023</p>
-        </div>
-        <div class="card">
-          <p class="main-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus aut cumque quisquam, eaque
-            eligendi omnis.</p>
-          <p class="date">30/08/2023</p>
+        <div v-for="card in  noteList ">
+          <div class="card" :style="{ backgroundColor: card.backgroundColor }">
+            <p class="main-text">{{ card.text }}</p>
+            <p class="date">{{ card.date }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +72,6 @@ h1 {
 .card {
   width: 225px;
   height: 225px;
-  background-color: rgb(237, 182, 44);
   padding: 10px;
   border-radius: 15px;
   display: flex;

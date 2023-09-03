@@ -32,9 +32,12 @@ const addNote = () => {
   <main>
     <div v-if="showModal" class="overlay flex items-center">
       <div class="bg-white rounded-md p-10 flex flex-col w-1/3">
-        <textarea v-model.trim="newNote" class="border mb-3" name="note" id="note" cols="30" rows="10"></textarea>
-        <p class="text-red-600" v-if="errorMessage">{{ errorMessage }}</p>
-        <button @click="addNote" class="bg-blue-400 hover:bg-blue-500 text-white mb-3 cursor-pointer">Add note</button>
+        <textarea v-model.trim="newNote" class="border" name="note" id="note" cols="30" rows="10"></textarea>
+        <span>
+          <p class="text-red-600" v-if="errorMessage">{{ errorMessage }}</p>
+        </span>
+        <button @click="addNote" class="bg-blue-400 hover:bg-blue-500 text-white mb-3 cursor-pointer mt-3">Add
+          note</button>
         <button @click="showModal = false" class="bg-red-200 hover:bg-red-400 text-white cursor-pointer">Close</button>
       </div>
     </div>
